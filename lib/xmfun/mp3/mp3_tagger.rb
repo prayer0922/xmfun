@@ -2,6 +2,7 @@
 
 require 'open-uri'
 require 'mp3info'
+require 'cgi'
 
 module Xmfun
   module Mp3
@@ -12,6 +13,7 @@ module Xmfun
           m.tag.title  = track.title
           m.tag.album  = track.album
 
+          m.tag2["USLT"] = CGI.unescapeHTML(open(track.lyric).read).force_encoding("UTF-8")
           m.tag2.remove_pictures
           m.tag2.add_picture(open(track.album_pic).read)
         end
